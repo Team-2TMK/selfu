@@ -1,0 +1,24 @@
+{
+  "name": "selfu",
+  "version": "1.0.0",
+  "description": "**Authors**: Krystal, Thomas, Tenaw, Madison **Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Team-2TMK/selfu.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Team-2TMK/selfu/issues"
+  },
+  "homepage": "https://github.com/Team-2TMK/selfu#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
