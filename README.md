@@ -17,22 +17,10 @@ Vist our deployed site at: [link here]()
 5. As a user, I want to receive results based on how I'm feeling and how much time I have.
 
 ## Domain Modeling
-<!-- Provide a detailed description of the application design. What technologies (languages, libraries, etc) you're using, and any other relevant design information. -->
+See our Domain Model [here](/resources/domainModel.PNG)!
 
 ## Database Entity-Relationship-Diagram
-<!-- Draft out what your database(s) will look like by creating an Entity Relationship Diagram.
-
-Be sure to identify the relationships (if any) between each of the tables:
-
-1-to-1 relationships
-1-to-many relationships
-many-to-many relationships
-Also, include in each table:
-
-The name of column
-The required data type
-Indication if the column is a key (Example: Primary Key, Foreign Key, Composite Key)
-Include this DB ERD in your readme, accompanied by an explanation of each table and it’s responsibility in the application. -->
+See our database layout [here](/resources/Database.jpg)
 
 ## Wireframes
 <!-- Link wireframes here -->
