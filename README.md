@@ -24,6 +24,10 @@ See our database layout [here](/resources/Database.jpg)
 
 ## Wireframes
 <!-- Link wireframes here -->
+- [PageOne](/resources/wirefram_page1.jpg)
+- [PageTwo](/resources/wirefram_page2.jpg)
+- [PageThree](/resources/wirefram_page3.jpg)
+- [PageFour](/resources/wirefram_page4.jpg)
 
 ## Resources
 <!-- APIs, fonts, color schemes, images, graphics, research, etc. -->
