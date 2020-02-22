@@ -18,13 +18,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
 // ================== ROUTES ====================
-app.get('/results', foodHandler);
+// app.get('/result', foodHandler);
 
 app.get('/', getHomePage);
 
 app.get('/quiz', getQuizData);
 
 app.get('/results', getResultData);
+
+app.post('/newresult', getNewResult);
 
 // ============== CALLBACK FUNCTIONS =================
 // Routes
@@ -51,21 +53,27 @@ function getResultData(request, response) {
 }
 
 
-function foodHandler(request, response) {
+// function foodHandler(request, response) {
 
-  try {
-    let foodUrl = `https://developers.zomato.com/api/v2.1/categories/${process.env.ZOMATO_API_KEY}/`;
-  } catch (error) {
-    errorHandler('something went wrong', request, response);
+//   try {
+//     let foodUrl = `https://developers.zomato.com/api/v2.1/categories/${process.env.ZOMATO_API_KEY}/`;
+//   } catch (error) {
+//     errorHandler('something went wrong', request, response);
 
-    superagent.get(foodUrl)
-      .then(data => {
-        // const 
-        response.send(forecastArray);
-      });
-  }
+//     superagent.get(foodUrl)
+//       .then(data => {
+//         // const 
+//         response.send(forecastArray);
+//       });
+//   }
+// }
+
+
+function getNewResult(request, response) {
+  let quizResult = request.body;
+  console.log(quizResult);
+  response.render('pages/newresult.ejs');
 }
-
 
 // Error Handler
 
