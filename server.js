@@ -18,6 +18,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
 // ================== ROUTES ====================
+app.get('/results', foodHandler);
+
 app.get('/', getHomePage);
 
 app.get('/quiz', getQuizData);
@@ -25,10 +27,10 @@ app.get('/quiz', getQuizData);
 app.get('/results', getResultData);
 
 // ============== CALLBACK FUNCTIONS =================
-function getHomePage(request, response){
 // Routes
-app.get('/', (request,response) =>{
+function getHomePage(request, response) {
   response.render('pages/index.ejs');
+
 }
 
 function getQuizData(request, response) {
@@ -46,8 +48,8 @@ function getResultData(request, response) {
     })
     .catch( e => { throw e; });
 
-  response.send('results page');
-app.get('/results', foodHandler);
+}
+
 
 function foodHandler(request, response) {
 
@@ -58,7 +60,7 @@ function foodHandler(request, response) {
 
     superagent.get(foodUrl)
       .then(data => {
-        const 
+        // const 
         response.send(forecastArray);
       });
   }
