@@ -7,9 +7,8 @@ $('#positive').on('click', function() {
 $('#submit').on('click', function() {
   let url = 'http://localhost:3000/newresult';
   console.log(url);
-  console.log('submitted');
   $.ajax(url, {
-    method: 'post',
+    method: 'get',
     dataType: 'json'
   })
     .then(data => {
