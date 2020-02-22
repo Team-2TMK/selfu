@@ -26,6 +26,8 @@ app.get('/results', getResultData);
 
 // ============== CALLBACK FUNCTIONS =================
 function getHomePage(request, response){
+// Routes
+app.get('/', (request,response) =>{
   response.render('pages/index.ejs');
 }
 
@@ -45,6 +47,28 @@ function getResultData(request, response) {
     .catch( e => { throw e; });
 
   response.send('results page');
+app.get('/results', foodHandler);
+
+function foodHandler(request, response) {
+
+  try {
+    let foodUrl = `https://developers.zomato.com/api/v2.1/categories/${process.env.ZOMATO_API_KEY}/`;
+  } catch (error) {
+    errorHandler('something went wrong', request, response);
+
+    superagent.get(foodUrl)
+      .then(data => {
+        const 
+        response.send(forecastArray);
+      });
+  }
+}
+
+
+// Error Handler
+
+function errorHandler(error, request, response) {
+  response.status(500).send(error);
 }
 
 
