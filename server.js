@@ -26,7 +26,7 @@ app.get('/quiz', getQuizData);
 
 app.get('/results', getResultData);
 
-app.post('/newresult', getNewResult);
+app.get('/newresult', getNewResult);
 
 // ============== CALLBACK FUNCTIONS =================
 // Routes
@@ -62,7 +62,7 @@ function getResultData(request, response) {
 
 //     superagent.get(foodUrl)
 //       .then(data => {
-//         // const 
+//         // const
 //         response.send(forecastArray);
 //       });
 //   }
@@ -70,10 +70,10 @@ function getResultData(request, response) {
 
 
 function getNewResult(request, response) {
-  // let quizResult = request.body;
-
   console.log('hi from back');
-  response.render('pages/newresult.ejs');
+  // let testObject = { cookie: 'samoas' };
+
+  response.render('pages/newresult.ejs', { cookie: 'samoas' });
 }
 
 // Error Handler
