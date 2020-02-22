@@ -1,4 +1,7 @@
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS results;
 
@@ -17,5 +20,9 @@ CREATE TABLE results (
     dateitemthree VARCHAR(255),
     rating INTEGER
 
+<<<<<<< Updated upstream
 );
 
+=======
+);
+>>>>>>> Stashed changes

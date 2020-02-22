@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.get('/', (request,response) =>{
-  response.send('Hello World!');
+  response.render('pages/index.ejs');
 });
 
 
