@@ -70,8 +70,9 @@ function getResultData(request, response) {
 
 
 function getNewResult(request, response) {
-  let quizResult = request.body;
-  console.log(quizResult);
+  // let quizResult = request.body;
+
+  console.log('hi from back');
   response.render('pages/newresult.ejs');
 }
 
