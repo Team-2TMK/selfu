@@ -6,17 +6,6 @@ let x = 0;
 //   console.log('clicked');
 // });
 
-$('#finalSubmit').on('click', function() {
-  let url = 'http://localhost:3000/newresult';
-  console.log(url);
-  $.ajax(url, {
-    method: 'get',
-    dataType: 'json'
-  })
-    .then(data => {
-      console.log(data);
-    });
-});
 
 // console.log('hello world');
 
@@ -44,4 +33,17 @@ $('#two .enter').on('click', function(event) {
     x--;
     console.log(x);
   }
+});
+
+$('#finalSubmit').on('click', function() {
+  let url = 'http://localhost:3000/newresult';
+  console.log(url);
+  $.ajax(url, {
+    method: 'get',
+    dataType: 'json',
+    data: { quizValue : x }
+  })
+    .then(data => {
+      console.log(data);
+    });
 });

@@ -102,7 +102,9 @@ apiCall();
 foodApiCall();
 
 function getNewResult(request, response) {
-  console.log('hi from back');
+  // console.log('hi from back');
+  let quizValue = request.query.quizValue;
+  console.log(quizValue);
   // let city = request.blah
   // let apiData = apiCall();
   // console.log('from inside getNewResult function: ', apiData);
