@@ -34,31 +34,29 @@ app.get('/newresult', getNewResult);
 // Routes
 function getHomePage(request, response) {
   response.render('pages/index.ejs');
-
 }
 
 function getUserData(request, response) {
+  // get the user info from the login form
   let username = request.body.username;
   let city = request.body.city;
-  // console.log(username);
-  // console.log(city);
 
+  // check the DB for existing user
   let SQL = 'SELECT * FROM users WHERE username=$1 AND city=$2;';
   let values = [username, city];
 
   client.query(SQL, values)
     .then( data => {
-      // console.log(data.rows);
-      if (data.rowCount) {
-        response.render('pages/index.ejs', { userInfo: data.rows[0] });
-      } else {
+      if (data.rowCount) { // if there is a match in the DB...
+        response.render('pages/index.ejs', { userInfo: data.rows[0] }); // send it to the home page
+      } else { // if there isn't a match...
+        // add the new user to the DB and...
         let addingSQL = 'INSERT INTO users (username, city) VALUES ($1, $2) RETURNING *;';
         let addingValues = [username, city];
 
         client.query(addingSQL,addingValues)
           .then( data => {
-            // console.log(data.rows);
-            response.render('pages/index.ejs', { userInfo: data.rows[0] });
+            response.render('pages/index.ejs', { userInfo: data.rows[0] }); // ... then send it back to the home page
           })
           .catch( e => { throw e; });
       }
