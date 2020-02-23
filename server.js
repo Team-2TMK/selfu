@@ -41,6 +41,7 @@ function getQuizData(request, response) {
 
 function getResultData(request, response) {
   let SQL = 'SELECT * FROM results;';
+  
   // console.log('hello!');
 
   client.query(SQL)
@@ -55,18 +56,9 @@ function getResultData(request, response) {
 
 // function foodHandler(request, response) {
 
-//   try {
-//     let foodUrl = `https://developers.zomato.com/api/v2.1/categories/${process.env.ZOMATO_API_KEY}/`;
-//   } catch (error) {
-//     errorHandler('something went wrong', request, response);
-
-//     superagent.get(foodUrl)
-//       .then(data => {
-//         // const
-//         response.send(forecastArray);
-//       });
-//   }
+  
 // }
+
 
 
 function getNewResult(request, response) {
