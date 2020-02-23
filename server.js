@@ -22,6 +22,8 @@ app.use(methodOverride('_method'));
 
 app.get('/', getHomePage);
 
+app.post('/', getUserData);
+
 app.get('/quiz', getQuizData);
 
 app.get('/results', getResultData);
@@ -35,26 +37,60 @@ function getHomePage(request, response) {
 
 }
 
+function getUserData(request, response) {
+  let username = request.body.username;
+  let city = request.body.city;
+  // console.log(username);
+  // console.log(city);
+
+  let SQL = 'SELECT * FROM users WHERE username=$1 AND city=$2;';
+  let values = [username, city];
+
+  client.query(SQL, values)
+    .then( data => {
+      // console.log(data.rows);
+      if (data.rowCount) {
+        response.render('pages/index.ejs', { userInfo: data.rows[0] });
+      } else {
+        let addingSQL = 'INSERT INTO users (username, city) VALUES ($1, $2) RETURNING *;';
+        let addingValues = [username, city];
+
+        client.query(addingSQL,addingValues)
+          .then( data => {
+            // console.log(data.rows);
+            response.render('pages/index.ejs', { userInfo: data.rows[0] });
+          })
+          .catch( e => { throw e; });
+      }
+    })
+    .catch( e => { throw e; });
+}
+
 function getQuizData(request, response) {
   response.render('pages/quiz.ejs');
 }
 
 function getResultData(request, response) {
   let SQL = 'SELECT * FROM results;';
-  // console.log('hello!');
 
   client.query(SQL)
     .then( results => {
-      // console.log(results.rows[0]);
       response.render('pages/results.ejs', { results: results.rows[0] });
     })
     .catch( e => { throw e; });
-
 }
 
+function getNewResult(request, response) {
+  console.log('hi from back');
+  // let city = request.blah
+  // let apiData = apiCall();
+  // console.log('from inside getNewResult function: ', apiData);
+  // let testObject = { cookie: 'samoas' };
 
-// function foodHandler(request, response) {
-// }
+  response.render('pages/newresult.ejs', { cookie: 'samoas' });
+}
+
+// =================== HELPER FUNCTIONS ===================
 
 function apiCall() {
   let locationURL = 'https://developers.zomato.com/api/v2.1/locations?query=seattle';
@@ -98,21 +134,10 @@ function foodApiCall() {
 
 }
 
-apiCall();
-foodApiCall();
-
-function getNewResult(request, response) {
-  console.log('hi from back');
-  // let city = request.blah
-  // let apiData = apiCall();
-  // console.log('from inside getNewResult function: ', apiData);
-  // let testObject = { cookie: 'samoas' };
-
-  response.render('pages/newresult.ejs', { cookie: 'samoas' });
-}
+// apiCall();
+// foodApiCall();
 
 // Error Handler
-
 function errorHandler(error, request, response) {
   response.status(500).send(error);
 }

@@ -1,7 +1,7 @@
 INSERT INTO users (
     username, city
 )
-VALUES ('thomas', 'Seattle');
+VALUES ('thomas', 'seattle');
 
 
 INSERT INTO results (

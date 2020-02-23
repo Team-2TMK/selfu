@@ -1,5 +1,14 @@
 'use strict';
 
+// ============== INDEX PAGE ==============
+
+$('#login').on('click', function showHideLogin(){
+  $('#welcomeMessage').show();
+  $('#login').hide();
+});
+
+// ============== QUIZ PAGE ===============
+
 $('#positive').on('click', function() {
   console.log('clicked');
 });
