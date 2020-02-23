@@ -41,7 +41,6 @@ function getQuizData(request, response) {
 
 function getResultData(request, response) {
   let SQL = 'SELECT * FROM results;';
-  
   // console.log('hello!');
 
   client.query(SQL)
@@ -55,14 +54,58 @@ function getResultData(request, response) {
 
 
 // function foodHandler(request, response) {
-
-  
 // }
 
+function apiCall() {
+  let locationURL = 'https://developers.zomato.com/api/v2.1/locations?query=seattle';
+  // let foodURL = 
+  console.log('I am the apiCall function!');
 
+  try {
+    superagent.get(locationURL)
+      .set('user-key', `${process.env.ZOMATO_API_KEY}`)
+      .then(data => {
+        let locationObj ={
+          entity_type: data.body.location_suggestions[0].entity_type,
+          entity_id: data.body.location_suggestions[0].entity_id
+        };
+        // console.log('locationObj: ', locationObj);
+        return locationObj;
+      })
+    // superagent.get(foodURL)
+    // .then()
+  }
+  catch(error) {
+    errorHandler(error);
+  }
+}
+
+function foodApiCall() {
+  let foodURL = 'https://developers.zomato.com/api/v2.1/location_details?entity_id=279&entity_type=city';
+  console.log('I am the foodApiCall function!');
+
+  try {
+    superagent.get(foodURL)
+      .set('user-key', `${process.env.ZOMATO_API_KEY}`)
+      .then(data => {
+        console.log(data.body.best_rated_restaurant[0].restaurant.name);
+        return data;
+      });
+  }
+  catch(error) {
+    errorHandler(error);
+  }
+
+}
+
+apiCall();
+foodApiCall();
 
 function getNewResult(request, response) {
   console.log('hi from back');
+  // let city = request.blah
+  // let apiData = apiCall();
+  // console.log('from inside getNewResult function: ', apiData);
   // let testObject = { cookie: 'samoas' };
 
   response.render('pages/newresult.ejs', { cookie: 'samoas' });
