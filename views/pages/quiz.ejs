@@ -17,22 +17,41 @@
 
   <!-- QUIZ -->
   <div id="quiz">
-    <h3>How do?</h3>
+    
+    <div class="questions">
+      <h3>How do?</h3>
+      <form id="one">
+        <fieldset class="positive">
+          <input type="radio" name="questionOne" value="positive">
+          <label for="positive">positive</label>
+        </fieldset>
+        
+        <fieldset class="negative">
+          <input type="radio" name="questionOne" value="negative">
+          <label for="negative">negative</label>
+        </fieldset>
+        <button class="enter">Enter</button>
+      </form>
+    </div>
 
-    <form>
-      <fieldset id="positive">
-        <input type="radio" name="positive" value="positive">
-        <label for="positive">positive</label>
-      </fieldset>
+    <div class="questions">
+      <h3>What be?</h3>
+      <form id="two">
+        <fieldset class="positive">
+          <input type="radio" name="questionTwo" value="positive">
+          <label for="positive">positive</label>
+        </fieldset>
+        
+        <fieldset class="negative">
+          <input type="radio" name="questionTwo" value="negative">
+          <label for="negative">negative</label>
+        </fieldset>
+        <button class="enter">Enter</button>
+      </form>
+    </div>
 
-      <fieldset>
-        <input type="radio" name="negative" value="negative">
-        <label for="negative">negative</label>
-      </fieldset>
-
-    </form>
     <a href="/newresult">
-      <button type="submit" id="submit">Submit</button>
+      <button type="submit" id="finalSubmit">Submit</button>
     </a>
 
   </div>
