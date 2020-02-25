@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <%- include('partials/head.ejs') %>
+    <title>Date Results</title>
 </head>
+
 <body>
-    <%= cookie %>
-    <a href="/"> <button>Home</button></a>
-  <a href="/results"> <button>My Dates</button></a>
-  <a href="/quiz"> <button>Take the Quiz</button></a>
+    <header>
+        <%- include('partials/header.ejs') %>
+    </header>
+    <main>
+        <%= cookie %>
+        <a href="/"> <button>Home</button></a>
+        <a href="/results"> <button>My Dates</button></a>
+        <a href="/quiz"> <button>Take the Quiz</button></a>
+    </main>
+    <footer><%- include('partials/footer.ejs') %></footer>
 </body>
+
 </html>

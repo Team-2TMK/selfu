@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <%- include('partials/head.ejs') %>
     <title>My Dates</title>
 </head>
+
 <body>
-    <%= results.dateitemone %>
-    <%= results.dateitemtwo %>
+    <header>
+        <%- include('partials/header.ejs') %>
+    </header>
+    <main>
+        <%= results.dateitemone %>
+        <%= results.dateitemtwo %>
 
-    <%= results.dateitemthree %>
+        <%= results.dateitemthree %>
 
-    <a href="/quiz"> <button>Take the Quiz</button></a>
-    <a href="/"> <button>Home</button></a>
-
-
+        <a href="/quiz"> <button>Take the Quiz</button></a>
+        <a href="/"> <button>Home</button></a>
+    </main>
+    <footer><%- include('partials/footer.ejs') %></footer>
 </body>
+
 </html>
