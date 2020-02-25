@@ -1,9 +1,5 @@
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS results;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS results CASCADE;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -19,10 +15,4 @@ CREATE TABLE results (
     dateitemtwo VARCHAR(255),
     dateitemthree VARCHAR(255),
     rating INTEGER
-
-<<<<<<< Updated upstream
 );
-
-=======
-);
->>>>>>> Stashed changes

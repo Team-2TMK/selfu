@@ -1,15 +1,14 @@
 'use strict';
 
+// ============== INDEX PAGE ==============
+
+$('#login').on('click', function showHideLogin(){
+  $('#welcomeMessage').show();
+  $('#login').hide();
+});
+
+// ============== QUIZ PAGE ===============
 let x = 0;
-
-// $('#positive').on('click', function() {
-//   console.log('clicked');
-// });
-
-
-// console.log('hello world');
-
-// $('input[name="name_of_your_radiobutton"]:checked').val();
 
 // ======= QUESTION 1 =======
 $('#one .enter').on('click', function(event) {
