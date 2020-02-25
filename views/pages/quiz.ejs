@@ -2,15 +2,16 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>selfU</title>
-  <link rel="stylesheet" href="./styles/styles.css" />
+  <%- include('partials/head.ejs') %>
+  <title>Quiz</title>
 </head>
 
 <body>
+  <header>
+    <%- include('partials/header.ejs') %>
+  </header>
 
-
+<main>
   <h1>Quiz</h1>
   <p>instructions/blurb about quiz here</p>
 
@@ -64,6 +65,8 @@
   <a href="/"> <button>Home</button></a>
   <a href="/results"> <button>My Dates</button></a>
 
+</main>
+  <footer><%- include('partials/footer.ejs') %></footer>
   <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
   <script src="/js/app.js"></script>
