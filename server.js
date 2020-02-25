@@ -80,6 +80,8 @@ function getResultData(request, response) {
 
 function getNewResult(request, response) {
   console.log('hi from back');
+  let quizValue = request.query.quizValue;
+  console.log(quizValue);
   // let city = request.blah
   // let apiData = apiCall();
   // console.log('from inside getNewResult function: ', apiData);
@@ -134,18 +136,6 @@ function foodApiCall() {
 
 // apiCall();
 // foodApiCall();
-
-function getNewResult(request, response) {
-  // console.log('hi from back');
-  let quizValue = request.query.quizValue;
-  console.log(quizValue);
-  // let city = request.blah
-  // let apiData = apiCall();
-  // console.log('from inside getNewResult function: ', apiData);
-  // let testObject = { cookie: 'samoas' };
-
-  response.render('pages/newresult.ejs', { cookie: 'samoas' });
-}
 
 // Error Handler
 function errorHandler(error, request, response) {
