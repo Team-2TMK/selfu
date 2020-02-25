@@ -17,6 +17,9 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
+// ================== GLOBAL ===================
+let city;
+
 // ================== ROUTES ====================
 // app.get('/result', foodHandler);
 
@@ -39,7 +42,7 @@ function getHomePage(request, response) {
 function getUserData(request, response) {
   // get the user info from the login form
   let username = request.body.username;
-  let city = request.body.city;
+  city = request.body.city;
 
   // check the DB for existing user
   let SQL = 'SELECT * FROM users WHERE username=$1 AND city=$2;';
@@ -78,55 +81,54 @@ function getResultData(request, response) {
     .catch( e => { throw e; });
 }
 
-function getNewResult(request, response) {
-  console.log('hi from back');
+async function getNewResult(request, response) {
   let quizValue = request.query.quizValue;
   console.log(quizValue);
-  // let city = request.blah
-  // let apiData = apiCall();
-  // console.log('from inside getNewResult function: ', apiData);
-  // let testObject = { cookie: 'samoas' };
 
-  response.render('pages/newresult.ejs', { cookie: 'samoas' });
+  let zomatoResult = await foodApiCall();
+  console.log(zomatoResult);
+
+  // if (quizValue >= 0){
+  // make certain api calls
+  // } else if (quizValue < 0) {
+  // make these api calls
+  // }
+
+  response.render('pages/newresult.ejs', { cookie: zomatoResult });
 }
 
 // =================== HELPER FUNCTIONS ===================
 
-function apiCall() {
-  let locationURL = 'https://developers.zomato.com/api/v2.1/locations?query=seattle';
-  // let foodURL = 
-  console.log('I am the apiCall function!');
-
+async function locationZomatoApiCall(city) {
   try {
-    superagent.get(locationURL)
-      .set('user-key', `${process.env.ZOMATO_API_KEY}`)
-      .then(data => {
-        let locationObj ={
-          entity_type: data.body.location_suggestions[0].entity_type,
-          entity_id: data.body.location_suggestions[0].entity_id
-        };
-        // console.log('locationObj: ', locationObj);
-        return locationObj;
-      })
-    // superagent.get(foodURL)
-    // .then()
+    // console.log(city);
+    // let locationURL = `https://developers.zomato.com/api/v2.1/locations?query=${city}`;
+    let locationURL = 'https://developers.zomato.com/api/v2.1/locations?query=seattle';
+    let data = await superagent.get(locationURL).set('user-key', `${process.env.ZOMATO_API_KEY}`);
+
+    let locationObj = {
+      entity_type: data.body.location_suggestions[0].entity_type,
+      entity_id: data.body.location_suggestions[0].entity_id
+    };
+    return locationObj;
   }
   catch(error) {
     errorHandler(error);
   }
 }
 
-function foodApiCall() {
-  let foodURL = 'https://developers.zomato.com/api/v2.1/location_details?entity_id=279&entity_type=city';
-  console.log('I am the foodApiCall function!');
-
+async function foodApiCall() {
   try {
-    superagent.get(foodURL)
-      .set('user-key', `${process.env.ZOMATO_API_KEY}`)
-      .then(data => {
-        console.log(data.body.best_rated_restaurant[0].restaurant.name);
-        return data;
-      });
+    let data = await locationZomatoApiCall(city);
+
+    let foodURL = `https://developers.zomato.com/api/v2.1/location_details?entity_id=${data.entity_id}&entity_type=${data.entity_type}`;
+
+    data = await superagent.get(foodURL).set('user-key', `${process.env.ZOMATO_API_KEY}`);
+
+    let newInstance = new Zomato(data.body.best_rated_restaurant[0].restaurant);
+    // console.log(newInstance);
+
+    return newInstance;
   }
   catch(error) {
     errorHandler(error);
@@ -134,8 +136,16 @@ function foodApiCall() {
 
 }
 
-// apiCall();
-// foodApiCall();
+// ================= CONSTRUCTORS ================
+
+function Zomato(data) {
+  this.name = data.name || 'No Name Available';
+  this.cuisine = data.cuisines || 'No Cuisine Information Available';
+  this.timings = data.timings || 'No Hours Information Available';
+  this.highlights = data.highlights || 'No Highlights Available';
+  this.url = data.url || 'No Website Information Available';
+  this.photo = data.photos ? data.photos[0].photo.thumb_url : 'No Photo Available';
+}
 
 // Error Handler
 function errorHandler(error, request, response) {
