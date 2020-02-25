@@ -79,9 +79,15 @@ function getResultData(request, response) {
 }
 
 function getNewResult(request, response) {
-  console.log('hi from back');
   let quizValue = request.query.quizValue;
   console.log(quizValue);
+
+  // if (quizValue >= 0){
+  // make certain api calls
+  // } else if (quizValue < 0) {
+  // make these api calls
+  // }
+
   // let city = request.blah
   // let apiData = apiCall();
   // console.log('from inside getNewResult function: ', apiData);
@@ -92,24 +98,23 @@ function getNewResult(request, response) {
 
 // =================== HELPER FUNCTIONS ===================
 
-function apiCall() {
+function locationZomatoApiCall() {
+  // let locationURL = `https://sdfhsghsjghosifgjsijgf/locations?query=${city}`
   let locationURL = 'https://developers.zomato.com/api/v2.1/locations?query=seattle';
-  // let foodURL = 
-  console.log('I am the apiCall function!');
+
+  // console.log('I am the locationZomatoApiCall function!');
 
   try {
-    superagent.get(locationURL)
+    return superagent.get(locationURL)
       .set('user-key', `${process.env.ZOMATO_API_KEY}`)
       .then(data => {
-        let locationObj ={
+        let locationObj = {
           entity_type: data.body.location_suggestions[0].entity_type,
           entity_id: data.body.location_suggestions[0].entity_id
         };
-        // console.log('locationObj: ', locationObj);
+        console.log('inside first api call: ', locationObj);
         return locationObj;
-      })
-    // superagent.get(foodURL)
-    // .then()
+      });
   }
   catch(error) {
     errorHandler(error);
@@ -117,25 +122,43 @@ function apiCall() {
 }
 
 function foodApiCall() {
-  let foodURL = 'https://developers.zomato.com/api/v2.1/location_details?entity_id=279&entity_type=city';
-  console.log('I am the foodApiCall function!');
+  return locationZomatoApiCall()
+    .then( data => {
+      console.log('inside second api function: ', data);
+      let foodURL = 'https://developers.zomato.com/api/v2.1/location_details?entity_id=279&entity_type=city';
 
-  try {
-    superagent.get(foodURL)
-      .set('user-key', `${process.env.ZOMATO_API_KEY}`)
-      .then(data => {
-        console.log(data.body.best_rated_restaurant[0].restaurant.name);
-        return data;
-      });
-  }
-  catch(error) {
-    errorHandler(error);
-  }
+      try {
+        return superagent.get(foodURL)
+          .set('user-key', `${process.env.ZOMATO_API_KEY}`)
+          .then(data => new Zomato(data.body.best_rated_restaurant[0].restaurant) );
+      }
+      catch(error) {
+        errorHandler(error);
+      }
 
+    });
 }
 
-// apiCall();
+// locationZomatoApiCall();
 // foodApiCall();
+
+async function name() {
+  let i = await foodApiCall();
+  console.log('inside async function: ', i)
+}
+
+name();
+
+// ================= CONSTRUCTORS ================
+
+function Zomato(data) {
+  this.name = data.name || 'No Name Available';
+  this.cuisine = data.cuisines || 'No Cuisine Information Available';
+  this.timings = data.timings || 'No Hours Information Available';
+  this.highlights = data.highlights || 'No Highlights Available';
+  this.url = data.url || 'No Website Information Available';
+  this.photo = data.photos ? data.photos[0].photo.thumb_url : 'No Photo Available';
+}
 
 // Error Handler
 function errorHandler(error, request, response) {
