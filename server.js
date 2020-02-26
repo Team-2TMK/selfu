@@ -35,6 +35,8 @@ app.get('/newresult', getNewResult);
 
 app.get('/aboutus', getAboutUs);
 
+app.post('/results', saveToMyDates);
+
 // ============== CALLBACK FUNCTIONS =================
 // Routes
 function getHomePage(request, response) {
@@ -78,7 +80,7 @@ function getResultData(request, response) {
 
   client.query(SQL)
     .then( results => {
-      response.render('pages/results.ejs', { results: results.rows[0] });
+      response.render('pages/results.ejs', { results: results.rows });
     })
     .catch( e => { throw e; });
 }
@@ -89,7 +91,7 @@ async function getNewResult(request, response) {
 
   let zomatoResult = await foodApiCall();
 
-  console.log('BRHHHHHHHHHHHH',zomatoResult);
+  // console.log('BRHHHHHHHHHHHH',zomatoResult);
 
   // if (quizValue >= 0){
   // make certain api calls
@@ -100,7 +102,22 @@ async function getNewResult(request, response) {
   response.render('pages/newresult.ejs', { butt: zomatoResult });
 }
 
+function saveToMyDates(request, response) {
+  let newDate = JSON.stringify(request.body);
+
+  let SQL = 'INSERT INTO results (userid, dateitemone, dateitemtwo, dateitemthree, rating) VALUES ($1, $2, $3, $4, $5) RETURNING *';
+  let values = [1, newDate, '"placeholder"', '"placeholder"', 0];
+
+  client.query(SQL, values)
+    .then( data => { response.redirect('/results');} )
+    .catch( e => { throw e; } );
+}
+
 // =================== HELPER FUNCTIONS ===================
+
+function randomNumber(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
 
 async function locationZomatoApiCall(city) {
   try {
@@ -119,9 +136,7 @@ async function locationZomatoApiCall(city) {
     errorHandler(error);
   }
 }
-function randomNumber(max) {
-  return Math.floor(Math.random() * Math.floor(max));
-}
+
 async function foodApiCall() {
   try {
     let data = await locationZomatoApiCall(city);

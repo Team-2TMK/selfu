@@ -11,8 +11,8 @@ CREATE TABLE results (
     id SERIAL PRIMARY KEY,
     userid INTEGER,
     FOREIGN KEY (userid) REFERENCES users(id),
-    dateitemone VARCHAR(255),
-    dateitemtwo VARCHAR(255),
-    dateitemthree VARCHAR(255),
+    dateitemone JSON,
+    dateitemtwo JSON,
+    dateitemthree JSON,
     rating INTEGER
 );
