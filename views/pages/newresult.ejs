@@ -11,10 +11,11 @@
         <%- include('partials/header.ejs') %>
     </header>
     <main>
-        <%= cookie %>
-        <a href="/"> <button>Home</button></a>
-        <a href="/results"> <button>My Dates</button></a>
-        <a href="/quiz"> <button>Take the Quiz</button></a>
+        <img src='<%- butt.photo %>'/>
+        <h1><%- butt.name %></h1>
+        <h2>Cuisine: <%- butt.cuisine %></h2>
+        <h2>Hours: <%- butt.timings %></h2>
+
     </main>
     <footer><%- include('partials/footer.ejs') %></footer>
 </body>

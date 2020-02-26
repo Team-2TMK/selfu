@@ -6,3 +6,48 @@ footer {
     background-color: #7bc0f2;
     color: #fafafa;
 }
+
+/* Header stuff starts here */
+
+#menuToggle a
+ {
+   text-decoration: none;
+   color: #36393b;
+ }
+
+ #menuToggle a:hover
+ {
+   color: #8aa29e;
+ }
+
+ #menuToggle span
+ {
+   background: #7bc0f2;
+   border-radius: 3px;
+ }
+
+ /* 
+  * Tranfrom hamburger into one line.
+  */
+  #menuToggle input:checked ~ span
+  {
+    opacity: 1;
+    background: #232323;
+  }
+  
+  /* Hide the two spans */
+  #menuToggle input:checked ~ span:nth-last-child(2)
+  {
+    opacity: 0;
+  }
+  
+  #menuToggle input:checked ~ span:nth-last-child(3)
+  {
+    opacity: 0;
+  }
+
+  #menu
+ {
+   background: #7bc0f2;
+   list-style-type: none;
+ }
