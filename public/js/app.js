@@ -43,6 +43,6 @@ $('#finalSubmit').on('click', function() {
     data: { quizValue : x }
   })
     .then(data => {
-      console.log(data);
+      console.log(data.name+'krystalllllllllllllllllllllllllllllll');
     });
 });

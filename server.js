@@ -33,6 +33,8 @@ app.get('/results', getResultData);
 
 app.get('/newresult', getNewResult);
 
+app.get('/aboutus', getAboutUs);
+
 // ============== CALLBACK FUNCTIONS =================
 // Routes
 function getHomePage(request, response) {
@@ -83,10 +85,11 @@ function getResultData(request, response) {
 
 async function getNewResult(request, response) {
   let quizValue = request.query.quizValue;
-  console.log(quizValue);
+  // console.log(quizValue);
 
   let zomatoResult = await foodApiCall();
-  console.log(zomatoResult);
+
+  console.log('BRHHHHHHHHHHHH',zomatoResult);
 
   // if (quizValue >= 0){
   // make certain api calls
@@ -94,7 +97,7 @@ async function getNewResult(request, response) {
   // make these api calls
   // }
 
-  response.render('pages/newresult.ejs', { cookie: zomatoResult });
+  response.render('pages/newresult.ejs', { butt: zomatoResult });
 }
 
 // =================== HELPER FUNCTIONS ===================
@@ -116,7 +119,9 @@ async function locationZomatoApiCall(city) {
     errorHandler(error);
   }
 }
-
+function randomNumber(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
 async function foodApiCall() {
   try {
     let data = await locationZomatoApiCall(city);
@@ -125,7 +130,7 @@ async function foodApiCall() {
 
     data = await superagent.get(foodURL).set('user-key', `${process.env.ZOMATO_API_KEY}`);
 
-    let newInstance = new Zomato(data.body.best_rated_restaurant[0].restaurant);
+    let newInstance = new Zomato(data.body.best_rated_restaurant[randomNumber(10)].restaurant);
     // console.log(newInstance);
 
     return newInstance;
@@ -134,6 +139,10 @@ async function foodApiCall() {
     errorHandler(error);
   }
 
+}
+
+function getAboutUs(request, response) {
+  response.render('pages/aboutus.ejs');
 }
 
 // ================= CONSTRUCTORS ================
