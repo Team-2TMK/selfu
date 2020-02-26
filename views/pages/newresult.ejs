@@ -11,10 +11,21 @@
         <%- include('partials/header.ejs') %>
     </header>
     <main>
-        <img src='<%- butt.photo %>'/>
-        <h1><%- butt.name %></h1>
-        <h2>Cuisine: <%- butt.cuisine %></h2>
-        <h2>Hours: <%- butt.timings %></h2>
+
+        <div>
+            <img src='<%- butt.photo %>'/>
+            <h1><%- butt.name %></h1>
+            <h2>Cuisine: <%- butt.cuisine %></h2>
+            <h2>Hours: <%- butt.timings %></h2>
+        </div>
+
+        <form method="post" action="/results">
+            <input class="invisible" name="photo" value="<%= butt.photo %>" />
+            <input class="invisible" name="name" value="<%= butt.name %>" />
+            <input class="invisible" name="cuisine" value="<%= butt.cuisine %>" />
+            <input class="invisible" name="timings" value="<%= butt.timings %>" />
+            <button>Save to My Dates</button>
+        </form>
 
     </main>
     <footer><%- include('partials/footer.ejs') %></footer>

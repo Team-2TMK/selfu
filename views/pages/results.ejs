@@ -11,10 +11,14 @@
         <%- include('partials/header.ejs') %>
     </header>
     <main>
-        <%= results.dateitemone %>
-        <%= results.dateitemtwo %>
 
-        <%= results.dateitemthree %>
+        <% results.forEach( date => { %>
+        <ul>
+            <li> <%- date.dateitemone %> </li>
+            <li> <%- date.dateitemtwo %> </li>
+            <li> <%- date.dateitemthree %> </li>
+        </ul>
+        <% }) %>
 
         <a href="/quiz"> <button>Take the Quiz</button></a>
         <a href="/"> <button>Home</button></a>
