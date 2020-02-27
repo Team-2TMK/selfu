@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
 // ================== GLOBAL ===================
-let city;
+let currentUser = {};
 
 // ================== ROUTES ====================
 
@@ -50,7 +50,7 @@ function getAboutUs(request, response) {
 function getUserData(request, response) {
   // get the user info from the login form
   let username = request.body.username;
-  city = request.body.city;
+  let city = request.body.city;
 
   // check the DB for existing user
   let SQL = 'SELECT * FROM users WHERE username=$1 AND city=$2;';
@@ -58,16 +58,19 @@ function getUserData(request, response) {
 
   client.query(SQL, values)
     .then(data => {
-      if (data.rowCount) { // if there is a match in the DB...
-        response.render('pages/index.ejs', { userInfo: data.rows[0] }); // send it to the home page
-      } else { // if there isn't a match...
-        // add the new user to the DB and...
+      if (data.rowCount) {
+        currentUser = data.rows[0];
+        console.log('if there: ', currentUser);
+        response.render('pages/index.ejs', { userInfo: data.rows[0] });
+      } else {
         let addingSQL = 'INSERT INTO users (username, city) VALUES ($1, $2) RETURNING *;';
         let addingValues = [username, city];
 
         client.query(addingSQL, addingValues)
           .then(data => {
-            response.render('pages/index.ejs', { userInfo: data.rows[0] }); // ... then send it back to the home page
+            currentUser = data.rows[0];
+            console.log('if not there: ', currentUser);
+            response.render('pages/index.ejs', { userInfo: data.rows[0] });
           })
           .catch(e => { throw e; });
       }
@@ -79,14 +82,13 @@ function getQuizData(request, response) {
   response.render('pages/quiz.ejs');
 }
 
-function getResultData(request, response) {
+async function getResultData(request, response) {
   let SQL = 'SELECT * FROM results;';
 
-  client.query(SQL)
-    .then(results => {
-      response.render('pages/results.ejs', { results: results.rows[0] });
-    })
-    .catch(e => { throw e; });
+  let results = await client.query(SQL);
+
+  response.render('pages/results.ejs', { results: results.rows });
+
 }
 
 async function getNewResult(request, response) {
@@ -94,10 +96,10 @@ async function getNewResult(request, response) {
   // console.log(quizValue);
 
   let zomatoResult = await foodApiCall();
-  let eventResult = await eventApiCall();
+  let eventResult = await eventApiCall(currentUser.city);
 
-  console.log(zomatoResult);
-  console.log(eventResult);
+  // console.log(zomatoResult);
+  // console.log(eventResult);
 
   // if (quizValue >= 0){
   // make certain api calls
@@ -111,10 +113,25 @@ async function getNewResult(request, response) {
 }
 
 function saveToMyDates(request, response) {
-  let newDate = JSON.stringify(request.body);
+  let foodData = {
+    photo: request.body.foodPhoto,
+    name: request.body.foodName,
+    cuisine: request.body.foodCuisine,
+    timings: request.body.foodTimings
+  };
+
+  let eventData = {
+    name: request.body.eventName,
+    link: request.body.eventLink,
+    date: request.body.eventDate,
+    summary: request.body.eventSummary
+  };
+
+  let parsedFood = JSON.stringify(foodData);
+  let parsedEvent = JSON.stringify(eventData);
 
   let SQL = 'INSERT INTO results (userid, dateitemone, dateitemtwo, dateitemthree, rating) VALUES ($1, $2, $3, $4, $5) RETURNING *';
-  let values = [1, newDate, '"placeholder"', '"placeholder"', 0];
+  let values = [1, parsedFood, parsedEvent, '"placeholder"', 0];
 
   client.query(SQL, values)
     .then(data => { response.redirect('/results'); })
@@ -130,9 +147,11 @@ function randomNumber(max) {
 
 async function locationZomatoApiCall(city) {
   try {
+    console.log('from api: ', currentUser);
+
     // console.log(city);
-    // let locationURL = `https://developers.zomato.com/api/v2.1/locations?query=${city}`;
-    let locationURL = 'https://developers.zomato.com/api/v2.1/locations?query=seattle';
+    let locationURL = `https://developers.zomato.com/api/v2.1/locations?query=${city}`;
+    // let locationURL = 'https://developers.zomato.com/api/v2.1/locations?query=seattle';
     let data = await superagent.get(locationURL).set('user-key', `${process.env.ZOMATO_API_KEY}`);
 
     let locationObj = {
@@ -148,7 +167,7 @@ async function locationZomatoApiCall(city) {
 
 async function foodApiCall() {
   try {
-    let data = await locationZomatoApiCall(city);
+    let data = await locationZomatoApiCall(currentUser.city);
 
     let foodURL = `https://developers.zomato.com/api/v2.1/location_details?entity_id=${data.entity_id}&entity_type=${data.entity_type}`;
 
@@ -165,9 +184,9 @@ async function foodApiCall() {
 
 }
 
-async function eventApiCall() {
+async function eventApiCall(city) {
   try {
-    let eventurl = `http://api.eventful.com/json/events/search?location=seattle&app_key=${process.env.EVENTFUL_API_KEY}&within=7&date=ThisWeek&page_size=1`;
+    let eventurl = `http://api.eventful.com/json/events/search?location=${city}&app_key=${process.env.EVENTFUL_API_KEY}&within=7&date=ThisWeek&page_size=1`;
 
     let data = await superagent.get(eventurl);
 
@@ -175,7 +194,7 @@ async function eventApiCall() {
     let eventsArray = dataObj.map(object => new Event(object));
     let eventsObject = eventsArray[0];
 
-    console.log(eventsObject);
+    // console.log(eventsObject);
     return eventsObject;
 
   }
@@ -198,17 +217,16 @@ function Zomato(data) {
 }
 
 function Event(eventData) {
-  this.link = eventData.url;
-  this.name = eventData.title;
-  this.event_date = eventData.start_time;
-  this.summary = eventData.description;
+  this.link = eventData.url || 'No Link Available';
+  this.name = eventData.title || 'No Title Available';
+  this.event_date = eventData.start_time || 'No Time and Date Available';
+  this.summary = eventData.description || 'No Description Available';
 }
 
 // =============== ERROR HANDLER ===================
 function errorHandler(error, request, response) {
   response.status(500).send(error);
 }
-
 
 // =============== LISTENER ===================
 client.connect()

@@ -14,8 +14,20 @@
 
         <% results.forEach( date => { %>
         <ul>
-            <li> <%- date.dateitemone %> </li>
-            <li> <%- date.dateitemtwo %> </li>
+            <li> 
+                <img src="<%- date.dateitemone.photo %>" />
+                <h3> <%- date.dateitemone.name %> </h3>
+                <p> <%- date.dateitemone.cuisine %> </p>
+                <p> <%- date.dateitemone.timings %> </p>
+            </li>
+
+            <li> 
+                <h3> <%- date.dateitemtwo.name %> </h3>
+                <p> <%- date.dateitemtwo.link %> </p>
+                <p> <%- date.dateitemtwo.date %> </p>
+                <p> <%- date.dateitemtwo.summary %> </p>
+            </li>
+
             <li> <%- date.dateitemthree %> </li>
         </ul>
         <% }) %>
