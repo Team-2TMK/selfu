@@ -10,6 +10,7 @@ const app = express();
 const methodOverride = require('method-override');
 
 const client = new pg.Client(process.env.DATABASE_URL);
+app.use(cors());
 
 //  ==================== EJS ======================
 app.use(express.static(__dirname + '/public'));
@@ -21,7 +22,6 @@ app.use(methodOverride('_method'));
 let city;
 
 // ================== ROUTES ====================
-// app.get('/result', foodHandler);
 
 app.get('/', getHomePage);
 
@@ -43,6 +43,10 @@ function getHomePage(request, response) {
   response.render('pages/index.ejs');
 }
 
+function getAboutUs(request, response) {
+  response.render('pages/aboutus.ejs');
+}
+
 function getUserData(request, response) {
   // get the user info from the login form
   let username = request.body.username;
@@ -53,7 +57,7 @@ function getUserData(request, response) {
   let values = [username, city];
 
   client.query(SQL, values)
-    .then( data => {
+    .then(data => {
       if (data.rowCount) { // if there is a match in the DB...
         response.render('pages/index.ejs', { userInfo: data.rows[0] }); // send it to the home page
       } else { // if there isn't a match...
@@ -61,14 +65,14 @@ function getUserData(request, response) {
         let addingSQL = 'INSERT INTO users (username, city) VALUES ($1, $2) RETURNING *;';
         let addingValues = [username, city];
 
-        client.query(addingSQL,addingValues)
-          .then( data => {
+        client.query(addingSQL, addingValues)
+          .then(data => {
             response.render('pages/index.ejs', { userInfo: data.rows[0] }); // ... then send it back to the home page
           })
-          .catch( e => { throw e; });
+          .catch(e => { throw e; });
       }
     })
-    .catch( e => { throw e; });
+    .catch(e => { throw e; });
 }
 
 function getQuizData(request, response) {
@@ -79,10 +83,10 @@ function getResultData(request, response) {
   let SQL = 'SELECT * FROM results;';
 
   client.query(SQL)
-    .then( results => {
-      response.render('pages/results.ejs', { results: results.rows });
+    .then(results => {
+      response.render('pages/results.ejs', { results: results.rows[0] });
     })
-    .catch( e => { throw e; });
+    .catch(e => { throw e; });
 }
 
 async function getNewResult(request, response) {
@@ -90,8 +94,10 @@ async function getNewResult(request, response) {
   // console.log(quizValue);
 
   let zomatoResult = await foodApiCall();
+  let eventResult = await eventApiCall();
 
-  // console.log('BRHHHHHHHHHHHH',zomatoResult);
+  console.log(zomatoResult);
+  console.log(eventResult);
 
   // if (quizValue >= 0){
   // make certain api calls
@@ -99,7 +105,9 @@ async function getNewResult(request, response) {
   // make these api calls
   // }
 
-  response.render('pages/newresult.ejs', { butt: zomatoResult });
+  // RENDER ALL THE API CALL RESULTS HERE
+
+  response.render('pages/newresult.ejs', { butt: zomatoResult, roundButt: eventResult });
 }
 
 function saveToMyDates(request, response) {
@@ -109,9 +117,10 @@ function saveToMyDates(request, response) {
   let values = [1, newDate, '"placeholder"', '"placeholder"', 0];
 
   client.query(SQL, values)
-    .then( data => { response.redirect('/results');} )
-    .catch( e => { throw e; } );
+    .then(data => { response.redirect('/results'); })
+    .catch(e => { throw e; });
 }
+
 
 // =================== HELPER FUNCTIONS ===================
 
@@ -132,7 +141,7 @@ async function locationZomatoApiCall(city) {
     };
     return locationObj;
   }
-  catch(error) {
+  catch (error) {
     errorHandler(error);
   }
 }
@@ -150,15 +159,32 @@ async function foodApiCall() {
 
     return newInstance;
   }
-  catch(error) {
+  catch (error) {
     errorHandler(error);
   }
 
 }
 
-function getAboutUs(request, response) {
-  response.render('pages/aboutus.ejs');
+async function eventApiCall() {
+  try {
+    let eventurl = `http://api.eventful.com/json/events/search?location=seattle&app_key=${process.env.EVENTFUL_API_KEY}&within=7&date=ThisWeek&page_size=1`;
+
+    let data = await superagent.get(eventurl);
+
+    let dataObj = JSON.parse(data.text).events.event;
+    let eventsArray = dataObj.map(object => new Event(object));
+    let eventsObject = eventsArray[0];
+
+    console.log(eventsObject);
+    return eventsObject;
+
+  }
+  catch (error) {
+    errorHandler(error);
+  }
 }
+
+
 
 // ================= CONSTRUCTORS ================
 
@@ -171,7 +197,14 @@ function Zomato(data) {
   this.photo = data.photos ? data.photos[0].photo.thumb_url : 'No Photo Available';
 }
 
-// Error Handler
+function Event(eventData) {
+  this.link = eventData.url;
+  this.name = eventData.title;
+  this.event_date = eventData.start_time;
+  this.summary = eventData.description;
+}
+
+// =============== ERROR HANDLER ===================
 function errorHandler(error, request, response) {
   response.status(500).send(error);
 }
@@ -179,7 +212,7 @@ function errorHandler(error, request, response) {
 
 // =============== LISTENER ===================
 client.connect()
-  .then(() =>{
+  .then(() => {
     app.listen(process.env.PORT, () => console.log(`server up on ${process.env.PORT}`));
   })
   .catch(() => { console.log('error'); });

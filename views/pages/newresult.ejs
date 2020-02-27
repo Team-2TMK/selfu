@@ -13,7 +13,7 @@
     <main>
 
         <div>
-            <img src='<%- butt.photo %>'/>
+            <img src='<%- butt.photo %>' />
             <h1><%- butt.name %></h1>
             <h2>Cuisine: <%- butt.cuisine %></h2>
             <h2>Hours: <%- butt.timings %></h2>
@@ -26,6 +26,16 @@
             <input class="invisible" name="timings" value="<%= butt.timings %>" />
             <button>Save to My Dates</button>
         </form>
+
+        <div id="newEventResult">
+            <ul>
+                <li><%= roundButt.name %></li>
+                <li><%= roundButt.link %></li>
+                <li><%= roundButt.event_date %></li>
+                <li><%= roundButt.summary %></li>
+            </ul>
+        </div>
+
 
     </main>
     <footer><%- include('partials/footer.ejs') %></footer>
