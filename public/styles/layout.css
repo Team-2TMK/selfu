@@ -22,6 +22,25 @@ hr {
 main {
     flex: 1;
 }
+#Bio{
+  /* background-color: whitesmoke; */
+  display: flex;
+  
+ 
+}
+div{
+  flex: 1;
+  flex-wrap: wrap;
+}
+#Madison,#Krystal, #Thomas, #Tenaw {
+  border: 2px solid red;
+  padding: 1em;
+  margin: 1em;
+  
+  
+}
+
+
 
 footer {
     width: 100%;
