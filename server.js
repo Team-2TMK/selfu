@@ -84,7 +84,7 @@ function getResultData(request, response) {
 
   client.query(SQL)
     .then(results => {
-      response.render('pages/results.ejs', { results: results.rows[0] });
+      response.render('pages/results.ejs', { results: results.rows });
     })
     .catch(e => { throw e; });
 }
@@ -96,8 +96,8 @@ async function getNewResult(request, response) {
   let zomatoResult = await foodApiCall();
   let eventResult = await eventApiCall();
 
-  console.log(zomatoResult);
-  console.log(eventResult);
+  // console.log(zomatoResult);
+  // console.log(eventResult);
 
   // if (quizValue >= 0){
   // make certain api calls
@@ -111,10 +111,30 @@ async function getNewResult(request, response) {
 }
 
 function saveToMyDates(request, response) {
-  let newDate = JSON.stringify(request.body);
+  let foodData = {
+    photo: request.body.foodPhoto,
+    name: request.body.foodName,
+    cuisine: request.body.foodCuisine,
+    timings: request.body.foodTimings
+  };
+
+  let eventData = {
+    name: request.body.eventName,
+    link: request.body.eventLink,
+    date: request.body.eventDate,
+    summary: request.body.eventSummary
+  };
+
+  let parsedFood = JSON.stringify(foodData);
+  let parsedEvent = JSON.stringify(eventData);
+
+  // console.log('foodData: ', foodData);
+  // console.log('eventData: ', eventData);
+  // let newDate = JSON.stringify(request.body);
+  // console.log(newDate);
 
   let SQL = 'INSERT INTO results (userid, dateitemone, dateitemtwo, dateitemthree, rating) VALUES ($1, $2, $3, $4, $5) RETURNING *';
-  let values = [1, newDate, '"placeholder"', '"placeholder"', 0];
+  let values = [1, parsedFood, parsedEvent, '"placeholder"', 0];
 
   client.query(SQL, values)
     .then(data => { response.redirect('/results'); })
@@ -175,7 +195,7 @@ async function eventApiCall() {
     let eventsArray = dataObj.map(object => new Event(object));
     let eventsObject = eventsArray[0];
 
-    console.log(eventsObject);
+    // console.log(eventsObject);
     return eventsObject;
 
   }

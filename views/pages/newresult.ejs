@@ -19,14 +19,6 @@
             <h2>Hours: <%- butt.timings %></h2>
         </div>
 
-        <form method="post" action="/results">
-            <input class="invisible" name="photo" value="<%= butt.photo %>" />
-            <input class="invisible" name="name" value="<%= butt.name %>" />
-            <input class="invisible" name="cuisine" value="<%= butt.cuisine %>" />
-            <input class="invisible" name="timings" value="<%= butt.timings %>" />
-            <button>Save to My Dates</button>
-        </form>
-
         <div id="newEventResult">
             <ul>
                 <li><%= roundButt.name %></li>
@@ -36,6 +28,17 @@
             </ul>
         </div>
 
+        <form method="post" action="/results">
+            <input class="invisible" name="foodPhoto" value="<%= butt.photo %>" />
+            <input class="invisible" name="foodName" value="<%= butt.name %>" />
+            <input class="invisible" name="foodCuisine" value="<%= butt.cuisine %>" />
+            <input class="invisible" name="foodTimings" value="<%= butt.timings %>" />
+            <input class="invisible" name="eventName" value="<%= roundButt.name %>" />
+            <input class="invisible" name="eventLink" value="<%= roundButt.link %>" />
+            <input class="invisible" name="eventDate" value="<%= roundButt.event_date %>" />
+            <input class="invisible" name="eventSummary" value="<%= roundButt.summary %>" />
+            <button>Save to My Dates</button>
+        </form>
 
     </main>
     <footer><%- include('partials/footer.ejs') %></footer>
