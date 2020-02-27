@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('partials/head.ejs') %>
+  <title>Quiz</title>
+</head>
+
+<body>
+  <header>
+    <%- include('partials/header.ejs') %>
+  </header>
+
+<main>
+  <p id="instructions">Click "enter" after answering the question.</p>
+
+
+  <!-- QUIZ -->
+  <div id="quiz">
+    
+    <div class="questions">
+      <h2>Is your mood more positive or negative today?</h3>
+      <form id="one">
+        <fieldset class="positive">
+          <input type="radio" name="questionOne" value="positive">
+          <label for="positive">Positive</label>
+        </fieldset>
+        
+        <fieldset class="negative">
+          <input type="radio" name="questionOne" value="negative">
+          <label for="negative">Negative</label>
+        </fieldset>
+
+        <button class="enter">Enter</button>
+
+      </form>
+    </div>
+
+    <div class="questions">
+      <h2>Would you like to get food?</h2>
+      <form id="two">
+        <fieldset class="positive">
+          <input type="radio" name="questionTwo" value="positive">
+          <label for="positive">Yes</label>
+        </fieldset>
+        
+        <fieldset class="negative">
+          <input type="radio" name="questionTwo" value="negative">
+          <label for="negative">YES but in caps</label>
+        </fieldset>
+        <button class="enter">Enter</button>
+      </form>
+    </div>
+
+    <div class="questions">
+      <h2>Are you more introverted or extroverted?</h2>
+      <form id="three">
+        <fieldset class="positive">
+          <input type="radio" name="questionThree" value="positive">
+          <label for="positive">Introverted</label>
+        </fieldset>
+        
+        <fieldset class="negative">
+          <input type="radio" name="questionThree" value="negative">
+          <label for="negative">Extroverted</label>
+        </fieldset>
+        <button class="enter">Enter</button>
+      </form>
+    </div>
+
+    <div class="questions">
+      <h2>Do you enjoy the indoors or outdoors? </h2>
+      <form id="four">
+        <fieldset class="positive">
+          <input type="radio" name="questionFour" value="positive">
+          <label for="positive">Indoors</label>
+        </fieldset>
+        
+        <fieldset class="negative">
+          <input type="radio" name="questionFour" value="negative">
+          <label for="negative">Outdoors</label>
+        </fieldset>
+        <button class="enter">Enter</button>
+      </form>
+    </div>
+
+    <div class="questions">
+      <h2>Remember to love yourself :)</h2>
+      <form id="five">
+        <fieldset class="positive">
+          <input type="radio" name="questionFive" value="positive">
+          <label for="positive">I love myself!</label>
+        </fieldset>
+        
+        <fieldset class="negative">
+          <input type="radio" name="questionFive" value="negative">
+          <label for="negative">I'm working on it!</label>
+        </fieldset>
+        <button class="enter">Enter</button>
+      </form>
+    </div>
+    <!-- Submit button -->
+    <a href="/newresult">
+      <button type="submit" id="finalSubmit">Submit</button>
+    </a>
+
+  </div>
+
+</main>
+  <footer><%- include('partials/footer.ejs') %></footer>
+  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+  <script src="/js/app.js"></script>
+</body>
+
+</html>

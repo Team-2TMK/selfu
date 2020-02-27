@@ -1,0 +1,42 @@
+<html lang="en">
+
+<head>
+    <%- include('partials/head.ejs') %>
+    <title>SelfU</title>
+</head>
+
+<body>
+    <header>
+        <%- include('partials/header.ejs') %>
+    </header>
+
+    <main class="">
+
+        <div>
+            <!-- show/hide -->
+            <p>What is your username and city?</p>
+            <form method="post">
+                <input type="text" placeholder="username" name="username" required />
+                <input type="text" placeholder="city" name="city" required />
+                <button type="submit" id="loginButton">Submit</button>
+            </form>
+        </div>
+
+        <div id="welcomeMessage">
+            <!-- show/hide -->
+            <p>Welcome to Selfu, </p>
+        </div>
+
+        <a href="/results"> <button>My Dates</button></a>
+        <a href="/quiz"> <button>Take the Quiz</button></a>
+
+    </main>
+
+    <footer><%- include('partials/footer.ejs') %></footer>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="/js/app.js"></script>
+</body>
+
+</html>

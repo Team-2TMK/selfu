@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('partials/head.ejs') %>
+    <title>Date Results</title>
+</head>
+
+<body>
+    <header>
+        <%- include('partials/header.ejs') %>
+    </header>
+    <main>
+
+        <div>
+            <img src='<%- butt.photo %>' />
+            <h1><%- butt.name %></h1>
+            <h2>Cuisine: <%- butt.cuisine %></h2>
+            <h2>Hours: <%- butt.timings %></h2>
+        </div>
+
+        <div id="newEventResult">
+            <ul>
+                <li><%= roundButt.name %></li>
+                <li><%= roundButt.link %></li>
+                <li><%= roundButt.event_date %></li>
+                <li><%= roundButt.summary %></li>
+            </ul>
+        </div>
+
+        <form method="post" action="/results">
+            <input class="invisible" name="foodPhoto" value="<%= butt.photo %>" />
+            <input class="invisible" name="foodName" value="<%= butt.name %>" />
+            <input class="invisible" name="foodCuisine" value="<%= butt.cuisine %>" />
+            <input class="invisible" name="foodTimings" value="<%= butt.timings %>" />
+            <input class="invisible" name="eventName" value="<%= roundButt.name %>" />
+            <input class="invisible" name="eventLink" value="<%= roundButt.link %>" />
+            <input class="invisible" name="eventDate" value="<%= roundButt.event_date %>" />
+            <input class="invisible" name="eventSummary" value="<%= roundButt.summary %>" />
+            <button>Save to My Dates</button>
+        </form>
+
+    </main>
+    <footer><%- include('partials/footer.ejs') %></footer>
+</body>
+
+</html>

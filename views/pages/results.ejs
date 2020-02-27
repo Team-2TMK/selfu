@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('partials/head.ejs') %>
+    <title>My Dates</title>
+</head>
+
+<body>
+    <header>
+        <%- include('partials/header.ejs') %>
+    </header>
+    <main>
+
+        <% results.forEach( date => { %>
+        <ul>
+            <li> 
+                <img src="<%- date.dateitemone.photo %>" />
+                <h3> <%- date.dateitemone.name %> </h3>
+                <p> <%- date.dateitemone.cuisine %> </p>
+                <p> <%- date.dateitemone.timings %> </p>
+            </li>
+
+            <li> 
+                <h3> <%- date.dateitemtwo.name %> </h3>
+                <p> <%- date.dateitemtwo.link %> </p>
+                <p> <%- date.dateitemtwo.date %> </p>
+                <p> <%- date.dateitemtwo.summary %> </p>
+            </li>
+
+            <li> <%- date.dateitemthree %> </li>
+
+            <form method="post" action="/results?_method=delete">
+                <input class="invisible" name="dateID" value="<%= date.id %>" />
+                <button type="submit">Delete Date</button>
+            </form>
+        </ul>
+        <% }) %>
+
+        <a href="/quiz"> <button>Take the Quiz</button></a>
+        <a href="/"> <button>Home</button></a>
+    </main>
+    <footer><%- include('partials/footer.ejs') %></footer>
+</body>
+
+</html>
