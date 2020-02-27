@@ -37,6 +37,8 @@ app.get('/aboutus', getAboutUs);
 
 app.post('/results', saveToMyDates);
 
+app.delete('/results', deleteDate);
+
 // ============== CALLBACK FUNCTIONS =================
 // Routes
 function getHomePage(request, response) {
@@ -48,11 +50,9 @@ function getAboutUs(request, response) {
 }
 
 function getUserData(request, response) {
-  // get the user info from the login form
-  let username = request.body.username;
-  let city = request.body.city;
+  let username = request.body.username.toLowerCase();
+  let city = request.body.city.toLowerCase();
 
-  // check the DB for existing user
   let SQL = 'SELECT * FROM users WHERE username=$1 AND city=$2;';
   let values = [username, city];
 
@@ -60,7 +60,6 @@ function getUserData(request, response) {
     .then(data => {
       if (data.rowCount) {
         currentUser = data.rows[0];
-        console.log('if there: ', currentUser);
         response.render('pages/index.ejs', { userInfo: data.rows[0] });
       } else {
         let addingSQL = 'INSERT INTO users (username, city) VALUES ($1, $2) RETURNING *;';
@@ -69,7 +68,6 @@ function getUserData(request, response) {
         client.query(addingSQL, addingValues)
           .then(data => {
             currentUser = data.rows[0];
-            console.log('if not there: ', currentUser);
             response.render('pages/index.ejs', { userInfo: data.rows[0] });
           })
           .catch(e => { throw e; });
@@ -83,9 +81,10 @@ function getQuizData(request, response) {
 }
 
 async function getResultData(request, response) {
-  let SQL = 'SELECT * FROM results;';
+  let SQL = 'SELECT * FROM results WHERE userid=$1;';
+  let values = [currentUser.id];
 
-  let results = await client.query(SQL);
+  let results = await client.query(SQL, values);
 
   response.render('pages/results.ejs', { results: results.rows });
 
@@ -93,21 +92,15 @@ async function getResultData(request, response) {
 
 async function getNewResult(request, response) {
   let quizValue = request.query.quizValue;
-  // console.log(quizValue);
 
   let zomatoResult = await foodApiCall();
   let eventResult = await eventApiCall(currentUser.city);
-
-  // console.log(zomatoResult);
-  // console.log(eventResult);
 
   // if (quizValue >= 0){
   // make certain api calls
   // } else if (quizValue < 0) {
   // make these api calls
   // }
-
-  // RENDER ALL THE API CALL RESULTS HERE
 
   response.render('pages/newresult.ejs', { butt: zomatoResult, roundButt: eventResult });
 }
@@ -131,13 +124,23 @@ function saveToMyDates(request, response) {
   let parsedEvent = JSON.stringify(eventData);
 
   let SQL = 'INSERT INTO results (userid, dateitemone, dateitemtwo, dateitemthree, rating) VALUES ($1, $2, $3, $4, $5) RETURNING *';
-  let values = [1, parsedFood, parsedEvent, '"placeholder"', 0];
+  let values = [currentUser.id, parsedFood, parsedEvent, '"placeholder"', 0];
 
   client.query(SQL, values)
     .then(data => { response.redirect('/results'); })
     .catch(e => { throw e; });
 }
 
+function deleteDate(request, response) {
+  let id = request.body.dateID;
+
+  let SQL = 'DELETE FROM results WHERE id=$1';
+  let values = [id];
+
+  client.query(SQL, values)
+    .then(() => { response.redirect('/results'); })
+    .catch( e => { throw e; });
+}
 
 // =================== HELPER FUNCTIONS ===================
 
@@ -147,11 +150,7 @@ function randomNumber(max) {
 
 async function locationZomatoApiCall(city) {
   try {
-    console.log('from api: ', currentUser);
-
-    // console.log(city);
     let locationURL = `https://developers.zomato.com/api/v2.1/locations?query=${city}`;
-    // let locationURL = 'https://developers.zomato.com/api/v2.1/locations?query=seattle';
     let data = await superagent.get(locationURL).set('user-key', `${process.env.ZOMATO_API_KEY}`);
 
     let locationObj = {
@@ -174,7 +173,6 @@ async function foodApiCall() {
     data = await superagent.get(foodURL).set('user-key', `${process.env.ZOMATO_API_KEY}`);
 
     let newInstance = new Zomato(data.body.best_rated_restaurant[randomNumber(10)].restaurant);
-    // console.log(newInstance);
 
     return newInstance;
   }
@@ -194,7 +192,6 @@ async function eventApiCall(city) {
     let eventsArray = dataObj.map(object => new Event(object));
     let eventsObject = eventsArray[0];
 
-    // console.log(eventsObject);
     return eventsObject;
 
   }
@@ -202,8 +199,6 @@ async function eventApiCall(city) {
     errorHandler(error);
   }
 }
-
-
 
 // ================= CONSTRUCTORS ================
 
