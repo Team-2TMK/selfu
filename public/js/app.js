@@ -15,10 +15,8 @@ $('#one .enter').on('click', function (event) {
   event.preventDefault();
   if ($('input[name="questionOne"]:checked').val() === 'positive') {
     x++;
-    console.log(x);
   } else if ($('input[name="questionOne"]:checked').val() === 'negative') {
     x--;
-    console.log(x);
   }
 });
 
@@ -27,10 +25,8 @@ $('#two .enter').on('click', function (event) {
   event.preventDefault();
   if ($('input[name="questionTwo"]:checked').val() === 'positive') {
     x++;
-    console.log(x);
   } else if ($('input[name="questionTwo"]:checked').val() === 'negative') {
     x--;
-    console.log(x);
   }
 });
 
@@ -39,10 +35,8 @@ $('#three .enter').on('click', function (event) {
   event.preventDefault();
   if ($('input[name="questionThree"]:checked').val() === 'positive') {
     x++;
-    console.log(x);
   } else if ($('input[name="questionThree"]:checked').val() === 'negative') {
     x--;
-    console.log(x);
   }
 });
 
@@ -51,10 +45,8 @@ $('#four .enter').on('click', function (event) {
   event.preventDefault();
   if ($('input[name="questionFour"]:checked').val() === 'positive') {
     x++;
-    console.log(x);
   } else if ($('input[name="questionFour"]:checked').val() === 'negative') {
     x--;
-    console.log(x);
   }
 });
 
@@ -63,22 +55,20 @@ $('#five .enter').on('click', function (event) {
   event.preventDefault();
   if ($('input[name="questionFive"]:checked').val() === 'positive') {
     x++;
-    console.log(x);
   } else if ($('input[name="questionFive"]:checked').val() === 'negative') {
     x--;
-    console.log(x);
   }
 });
 
+// ======= SUBMIT THE QUIZ AND SEND TO BACK =======
 $('#finalSubmit').on('click', function () {
   let url = 'http://localhost:3000/newresult';
-  console.log(url);
   $.ajax(url, {
     method: 'get',
     dataType: 'json',
     data: { quizValue: x }
   })
     .then(data => {
-      console.log(data.name + 'krystalllllllllllllllllllllllllllllll');
+      console.log(data.name);
     });
 });

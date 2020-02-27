@@ -29,6 +29,11 @@
             </li>
 
             <li> <%- date.dateitemthree %> </li>
+
+            <form method="post" action="/results?_method=delete">
+                <input class="invisible" name="dateID" value="<%= date.id %>" />
+                <button type="submit">Delete Date</button>
+            </form>
         </ul>
         <% }) %>
 
