@@ -60,6 +60,7 @@ function getUserData(request, response) {
     .then(data => {
       if (data.rowCount) {
         currentUser = data.rows[0];
+        console.log(currentUser);
         response.render('pages/index.ejs', { userInfo: data.rows[0] });
       } else {
         let addingSQL = 'INSERT INTO users (username, city) VALUES ($1, $2) RETURNING *;';
@@ -96,6 +97,7 @@ async function getNewResult(request, response) {
   // let quoteResult = await quoteApiCall();
   let zomatoResult = await foodApiCall();
   let eventResult = await eventApiCall(currentUser.city);
+  let quoteResult = await quoteApiCall();
 
   // if (quizValue >= 0){
   // make certain api calls
@@ -103,7 +105,7 @@ async function getNewResult(request, response) {
   // make these api calls
   // }
 
-  response.render('pages/newresult.ejs', { butt: zomatoResult, roundButt: eventResult });
+  response.render('pages/newresult.ejs', { niceButt: quoteResult, butt: zomatoResult, roundButt: eventResult });
 }
 
 function saveToMyDates(request, response) {
@@ -165,22 +167,22 @@ async function locationZomatoApiCall(city) {
   }
 }
 
-// async function quoteApiCall() {
-//   try {
+async function quoteApiCall() {
+  try {
 
-//     let quoteURL = `https://api.paperquotes.com/apiv1/quotes/?lang=en&tags=inspiration,motivational-quotes,motivation,passion,mindset,greatness`;
+    let quoteURL = `https://api.paperquotes.com/apiv1/quotes/?lang=en&tags=inspiration,motivational-quotes,motivation,passion,mindset,greatness`;
 
-//     let data = await superagent.get(quoteURL).set('Authorization', `${process.env.PAPERQUOTES_API_KEY}`);
+    let data = await superagent.get(quoteURL).set('Authorization', `${process.env.PAPERQUOTES_API_KEY}`);
 
-//     let newQuote = data.map(object => new Quote(object));
-//     // let quoteObj = newQuote[0];
-//     console.log(newQuote);
-//     return newQuote;
-//   }
-//   catch (error) {
-//     errorHandler(error);
-//   }
-// }
+    let newQuote = new Quote(data.body);
+    let quoteObj = newQuote[0];
+    console.log(quoteObj);
+    return quoteObj;
+  }
+  catch (error) {
+    errorHandler(error);
+  }
+}
 
 async function foodApiCall() {
   try {
@@ -220,10 +222,10 @@ async function eventApiCall(city) {
 
 // ================= CONSTRUCTORS ================
 
-// function Quote(quoteData) {
-//   this.quote = quoteData.results.quote;
-//   this.author = quoteData.results.author || 'Unknown';
-// }
+function Quote(quoteData) {
+  this.quote = quoteData.body.results.quote;
+  this.author = quoteData.body.results.author || 'Unknown';
+}
 
 function Zomato(data) {
   this.name = data.name || 'No Name Available';
