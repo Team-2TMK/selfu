@@ -28,10 +28,12 @@ button {
 }
 
 #Bio {
+  
     display: flex;
 }
 
 /* About Us */
+
 
 #Madison, #Krystal, #Thomas, #Tenaw {
     border: 2px solid red;
@@ -171,18 +173,17 @@ nav {
 
       /* ABout US Page */
 
-#aboutUs {
+/* #aboutUs {
+    
     float: left;
     margin-top: 40px;
   }
-#column1,
-#column2,
-#column3 {
+#column1,#column2,#column3 {
   display: flex;
 }
 
 .pictureColumn {
-  width: 100%;
+  width: 20%;
 }
 
 #column2 {
@@ -230,12 +231,14 @@ nav {
   font-family: 'Sigmar One', cursive ; font-size: medium;
 } */
 
-.imgBox > a {
+/* .imgBox > a {
   font-family: 'Permanent Marker', cursive;
 }
 
 #img1, #img3 {
   padding-bottom: 10px;
+  width: 100px;
+  height: 100px;
 }
 
 
@@ -254,7 +257,7 @@ nav {
 }
 
 
-#img2, 
-#img4 {
+#img2, #img4 {
   margin-top: 40px;
-}
+} */ */
+ 
