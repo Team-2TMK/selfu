@@ -15,6 +15,12 @@
         <% results.forEach( date => { %>
         <ul>
             <div id="date">
+            <li>
+                <h2>Quote:</h2>
+                <p><%- date.dateitemthree.quote %></p>
+                <h3><%- date.dateitemthree.author %></h3>
+            </li>
+
             <li> 
                 <h2>Restaurant:</h2>
                 <img src="<%- date.dateitemone.photo %>" />
@@ -30,12 +36,6 @@
                 <p> <span class="label">Date of Event:</span> <%- date.dateitemtwo.date %> </p>
                 <p> <span class="label">Event Summary:</span> <%- date.dateitemtwo.summary %> </p>
             </li>
-
-            <li>
-                <h2>Quote:</h2> 
-                <p><%- date.dateitemthree %></p> 
-            </li>
-            
 
             <form method="post" action="/results?_method=delete">
                 <input class="invisible" name="dateID" value="<%= date.id %>" />

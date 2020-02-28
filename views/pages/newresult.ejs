@@ -14,8 +14,14 @@
         <div id="newDate">
             <div id="theNewDate">
                 <div>
+                    <h2>Quote:</h2>
+                    <p><%- nicebutt.quote %></p>
+                    <h3><%- nicebutt.author %></h3>
+                </div>
+
+                <div>
                     <h2>Restaurant:</h2>
-                    <img src='<%- butt.photo %>' />
+                    <img src="<%- butt.photo %>" />
                     <h3><%- butt.name %></h3>
                     <p><span class="label">Cuisine:</span><%- butt.cuisine %></p>
                     <p><span class="label">Hours of Operation:</span><%- butt.timings %></p>
@@ -24,15 +30,17 @@
                 <div>
                     <h2>Event:</h2> 
                     <ul>
-                        <li><h3><%= roundButt.name %></h3></li>
-                        <li><a href="<%= roundButt.link %>">Event Link</a></li>
-                        <li><p><span class="label">Date:</span><%= roundButt.event_date %></p></li>
-                        <li><p><span class="label">Event Summary:</span><%= roundButt.summary %></p></li>
+                        <li><h3><%- roundButt.name %></h3></li>
+                        <li><a href="<%- roundButt.link %>">Event Link</a></li>
+                        <li><p><span class="label">Date:</span><%- roundButt.event_date %></p></li>
+                        <li><p><span class="label">Event Summary:</span><%- roundButt.summary %></p></li>
                     </ul>
                 </div>
         
 
         <form method="post" action="/results">
+            <input class="invisible" name="quoteText" value="<%= nicebutt.quote %>" />
+            <input class="invisible" name="quoteAuthor" value="<%= nicebutt.author %>" />
             <input class="invisible" name="foodPhoto" value="<%= butt.photo %>" />
             <input class="invisible" name="foodName" value="<%= butt.name %>" />
             <input class="invisible" name="foodCuisine" value="<%= butt.cuisine %>" />
