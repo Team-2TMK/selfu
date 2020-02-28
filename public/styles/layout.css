@@ -1,3 +1,4 @@
+
 #logo {
     display: flex;
     margin-left: auto;
@@ -17,22 +18,27 @@ main {
     flex: 1;
     justify-content: center;
     flex-direction: column;
-}
-#Bio{
-  /* background-color: whitesmoke; */
-  display: flex;
-}
-div{
-  flex: 1;
-  flex-wrap: wrap;
-}
-#Madison,#Krystal, #Thomas, #Tenaw {
-  border: 2px solid red;
-  padding: 1em;
-  margin: 1em; 
+    align-content: center;
+    align-items: center;
 }
 
+button {
+    margin: 2px;
+    padding: 10px, 24px;
+}
 
+#Bio {
+    display: flex;
+}
+
+/* About Us */
+
+
+#Madison, #Krystal, #Thomas, #Tenaw {
+    border: 2px solid red;
+    padding: 1em;
+    margin: 1em;
+}
 
 footer {
     width: 100%;
@@ -45,14 +51,28 @@ footer {
 /* Quiz stuff starts here */
 
 #instructions {
-text-align: center;
+    text-align: center;
+    margin-top: 30px;
 }
 
-#quiz {
-    border: 2px solid red;
+#quiz, #mydates, #newDate {
     text-align: center;
     flex-direction: column;
+    align-items: center;
+    margin: 30px;
 }
+
+.questions, #date, #theNewDate {
+    margin: 30px;
+    padding: 30px;
+}
+
+#finalSubmit {
+    margin-bottom: 30px;
+}
+
+
+
 
 /* Hamburger menu starts here */
 
@@ -149,3 +169,94 @@ nav {
 #menuToggle input:checked~ul {
     transform: none;
 }
+
+      /* ABout US Page */
+
+/* #aboutUs {
+    
+    float: left;
+    margin-top: 40px;
+  }
+#column1,#column2,#column3 {
+  display: flex;
+}
+
+.pictureColumn {
+  width: 20%;
+}
+
+#column2 {
+  width: 40%;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: #0000008c;
+  border-radius: 10px;
+  padding: 10px 8px;
+  
+}
+
+#column2 > p {
+  padding-bottom: 10px;
+}
+
+.about-name {
+  font-size: medium;
+  font-weight: bold;
+}
+
+
+
+.imgBox > a {
+  display: block;
+  font-size: small;
+}
+
+.imgBox {
+  margin: auto;
+  padding-top: 10px;
+  padding-left: 50px;
+  padding-right: 10px;
+  padding-bottom: 15px;
+}
+
+.imgBox > div {
+  width: 100px;
+  height: 120px;
+  margin: auto;
+}
+
+/* .imgBox > p {
+  font-family: 'Sigmar One', cursive ; font-size: medium;
+} */
+
+/* .imgBox > a {
+  font-family: 'Permanent Marker', cursive;
+}
+
+#img1, #img3 {
+  padding-bottom: 10px;
+  width: 100px;
+  height: 100px;
+}
+
+
+
+
+.linkedin {
+  float: left;
+  width: 40px;
+}
+
+
+.github {
+  margin-top: 5px;
+  float: right;
+  width: 30px;
+}
+
+
+#img2, #img4 {
+  margin-top: 40px;
+} */ */
+ 

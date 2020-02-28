@@ -11,34 +11,41 @@
         <%- include('partials/header.ejs') %>
     </header>
     <main>
-
+        <div id="mydates">
         <% results.forEach( date => { %>
         <ul>
+            <div id="date">
+            <li>
+                <h2>Quote:</h2>
+                <p><%- date.dateitemthree.quote %></p>
+                <h3><%- date.dateitemthree.author %></h3>
+            </li>
+
             <li> 
+                <h2>Restaurant:</h2>
                 <img src="<%- date.dateitemone.photo %>" />
                 <h3> <%- date.dateitemone.name %> </h3>
-                <p> <%- date.dateitemone.cuisine %> </p>
-                <p> <%- date.dateitemone.timings %> </p>
+                <p> <span class="label">Cuisine:</span> <%- date.dateitemone.cuisine %> </p>
+                <p> <span class="label">Hours of Operation:</span> <%- date.dateitemone.timings %> </p>
             </li>
 
-            <li> 
+            <li>
+                <h2>Event:</h2> 
                 <h3> <%- date.dateitemtwo.name %> </h3>
-                <p> <%- date.dateitemtwo.link %> </p>
-                <p> <%- date.dateitemtwo.date %> </p>
-                <p> <%- date.dateitemtwo.summary %> </p>
+                <p><a href="<%- date.dateitemtwo.link %>">Event Link</a></p>
+                <p> <span class="label">Date of Event:</span> <%- date.dateitemtwo.date %> </p>
+                <p> <span class="label">Event Summary:</span> <%- date.dateitemtwo.summary %> </p>
             </li>
-
-            <li> <%- date.dateitemthree %> </li>
 
             <form method="post" action="/results?_method=delete">
                 <input class="invisible" name="dateID" value="<%= date.id %>" />
                 <button type="submit">Delete Date</button>
             </form>
+        </div>
         </ul>
         <% }) %>
+        </div>
 
-        <a href="/quiz"> <button>Take the Quiz</button></a>
-        <a href="/"> <button>Home</button></a>
     </main>
     <footer><%- include('partials/footer.ejs') %></footer>
 </body>

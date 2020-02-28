@@ -60,6 +60,7 @@ function getUserData(request, response) {
     .then(data => {
       if (data.rowCount) {
         currentUser = data.rows[0];
+        console.log(currentUser);
         response.render('pages/index.ejs', { userInfo: data.rows[0] });
       } else {
         let addingSQL = 'INSERT INTO users (username, city) VALUES ($1, $2) RETURNING *;';
@@ -95,6 +96,7 @@ async function getNewResult(request, response) {
 
   let zomatoResult = await foodApiCall();
   let eventResult = await eventApiCall(currentUser.city);
+  let quoteResult = await quoteApiCall();
 
   // if (quizValue >= 0){
   // make certain api calls
@@ -102,7 +104,7 @@ async function getNewResult(request, response) {
   // make these api calls
   // }
 
-  response.render('pages/newresult.ejs', { butt: zomatoResult, roundButt: eventResult });
+  response.render('pages/newresult.ejs', { nicebutt: quoteResult, butt: zomatoResult, roundButt: eventResult });
 }
 
 function saveToMyDates(request, response) {
@@ -120,11 +122,17 @@ function saveToMyDates(request, response) {
     summary: request.body.eventSummary
   };
 
+  let quoteData = {
+    quote: request.body.quoteText,
+    author: request.body.quoteAuthor
+  };
+
   let parsedFood = JSON.stringify(foodData);
   let parsedEvent = JSON.stringify(eventData);
+  let parsedQuote = JSON.stringify(quoteData);
 
   let SQL = 'INSERT INTO results (userid, dateitemone, dateitemtwo, dateitemthree, rating) VALUES ($1, $2, $3, $4, $5) RETURNING *';
-  let values = [currentUser.id, parsedFood, parsedEvent, '"placeholder"', 0];
+  let values = [currentUser.id, parsedFood, parsedEvent, parsedQuote, 0];
 
   client.query(SQL, values)
     .then(data => { response.redirect('/results'); })
@@ -160,7 +168,8 @@ async function locationZomatoApiCall(city) {
     return locationObj;
   }
   catch (error) {
-    errorHandler(error);
+    console.log(error);
+    // errorHandler(error);
   }
 }
 
@@ -177,7 +186,8 @@ async function foodApiCall() {
     return newInstance;
   }
   catch (error) {
-    errorHandler(error);
+    console.log(error);
+    // errorHandler(error);
   }
 
 }
@@ -196,11 +206,33 @@ async function eventApiCall(city) {
 
   }
   catch (error) {
-    errorHandler(error);
+    console.log(error);
+    // errorHandler(error);
   }
 }
 
+async function quoteApiCall() {
+  try {
+    let quoteURL = `https://api.paperquotes.com/apiv1/quotes/?lang=en&tags=inspiration,motivational-quotes,motivation,passion,mindset,greatness`;
+    let data = await superagent.get(quoteURL).set('Authorization', `Token ${process.env.PAPERQUOTES_API_KEY}`);
+
+    let newQuote = new Quote(data.body.results[randomNumber(5)]);
+    return newQuote;
+  }
+  catch (error) {
+    console.log(error);
+    // errorHandler(error);
+  }
+}
+
+// quoteApiCall();
+
 // ================= CONSTRUCTORS ================
+
+function Quote(quoteData) {
+  this.quote = quoteData.quote || 'No Quote Found';
+  this.author = quoteData.author || 'Unknown';
+}
 
 function Zomato(data) {
   this.name = data.name || 'No Name Available';
@@ -220,7 +252,7 @@ function Event(eventData) {
 
 // =============== ERROR HANDLER ===================
 function errorHandler(error, request, response) {
-  response.status(500).send(error);
+  response.status(400).send(error);
 }
 
 // =============== LISTENER ===================
