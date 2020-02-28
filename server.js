@@ -93,6 +93,7 @@ async function getResultData(request, response) {
 async function getNewResult(request, response) {
   let quizValue = request.query.quizValue;
 
+  // let quoteResult = await quoteApiCall();
   let zomatoResult = await foodApiCall();
   let eventResult = await eventApiCall(currentUser.city);
 
@@ -164,6 +165,23 @@ async function locationZomatoApiCall(city) {
   }
 }
 
+// async function quoteApiCall() {
+//   try {
+
+//     let quoteURL = `https://api.paperquotes.com/apiv1/quotes/?lang=en&tags=inspiration,motivational-quotes,motivation,passion,mindset,greatness`;
+
+//     let data = await superagent.get(quoteURL).set('Authorization', `${process.env.PAPERQUOTES_API_KEY}`);
+
+//     let newQuote = data.map(object => new Quote(object));
+//     // let quoteObj = newQuote[0];
+//     console.log(newQuote);
+//     return newQuote;
+//   }
+//   catch (error) {
+//     errorHandler(error);
+//   }
+// }
+
 async function foodApiCall() {
   try {
     let data = await locationZomatoApiCall(currentUser.city);
@@ -201,6 +219,11 @@ async function eventApiCall(city) {
 }
 
 // ================= CONSTRUCTORS ================
+
+// function Quote(quoteData) {
+//   this.quote = quoteData.results.quote;
+//   this.author = quoteData.results.author || 'Unknown';
+// }
 
 function Zomato(data) {
   this.name = data.name || 'No Name Available';
