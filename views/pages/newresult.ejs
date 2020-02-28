@@ -11,22 +11,24 @@
         <%- include('partials/header.ejs') %>
     </header>
     <main>
+        <div id="newDate">
+            <div id="theNewDate">
+                <div>
+                    <img src='<%- butt.photo %>' />
+                    <h1><%- butt.name %></h1>
+                    <h2>Cuisine: <%- butt.cuisine %></h2>
+                    <h2>Hours: <%- butt.timings %></h2>
+                </div>
 
-        <div>
-            <img src='<%- butt.photo %>' />
-            <h1><%- butt.name %></h1>
-            <h2>Cuisine: <%- butt.cuisine %></h2>
-            <h2>Hours: <%- butt.timings %></h2>
-        </div>
-
-        <div id="newEventResult">
-            <ul>
-                <li><%= roundButt.name %></li>
-                <li><%= roundButt.link %></li>
-                <li><%= roundButt.event_date %></li>
-                <li><%= roundButt.summary %></li>
-            </ul>
-        </div>
+                <div>
+                    <ul>
+                        <li><%= roundButt.name %></li>
+                        <li><%= roundButt.link %></li>
+                        <li><%= roundButt.event_date %></li>
+                        <li><%= roundButt.summary %></li>
+                    </ul>
+                </div>
+        
 
         <form method="post" action="/results">
             <input class="invisible" name="foodPhoto" value="<%= butt.photo %>" />
@@ -39,7 +41,8 @@
             <input class="invisible" name="eventSummary" value="<%= roundButt.summary %>" />
             <button>Save to My Dates</button>
         </form>
-
+        </div>
+    </div>
     </main>
     <footer><%- include('partials/footer.ejs') %></footer>
 </body>

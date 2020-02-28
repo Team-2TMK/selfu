@@ -11,9 +11,10 @@
         <%- include('partials/header.ejs') %>
     </header>
     <main>
-
+        <div id="mydates">
         <% results.forEach( date => { %>
         <ul>
+            <div id="date">
             <li> 
                 <img src="<%- date.dateitemone.photo %>" />
                 <h3> <%- date.dateitemone.name %> </h3>
@@ -29,13 +30,16 @@
             </li>
 
             <li> <%- date.dateitemthree %> </li>
+            
 
             <form method="post" action="/results?_method=delete">
                 <input class="invisible" name="dateID" value="<%= date.id %>" />
                 <button type="submit">Delete Date</button>
             </form>
+        </div>
         </ul>
         <% }) %>
+        </div>
 
         <a href="/quiz"> <button>Take the Quiz</button></a>
         <a href="/"> <button>Home</button></a>
