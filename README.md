@@ -33,6 +33,8 @@ See our database layout [here](/resources/Database.jpg)
 https://developers.zomato.com/documentation
 https://api.eventful.com/docs
 http://paperquotes.com/api-docs/
+https://icons8.com/icons/set/linkedin
+https://icons8.com/icons/set/github
 
 ## Credits and Collaborations
 Hamburger Menu:
