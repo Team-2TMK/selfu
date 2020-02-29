@@ -10,35 +10,74 @@
     <header>
         <%- include('partials/header.ejs') %>
     </header>
-    <main id = Bio>
-        <div id="Madison">
-            <img src="" alt="">
-            <h1> Hi, this is Madison</h1>
-            <p> I am a great person and  developer</p>
+
+    <main>
+        <div id="Bio">
+            <div id="madisonKrystal">
+                <div id="Madison">
+                    <img class="selfie" src="/resources/madison.jpg" alt=" selfie of Madison">
+                    <h1 class="ourName">Madison Stehle</h1>
+                    <p class="blurb"> Madison is a full-stack software developer with a passion for
+                        both breaking apps and making apps. She has two fur-children,
+                        has hiked on volcanoes and waterfalls, regularly blasts her eardrums with
+                        heavy metal music, and is always looking for another book recommendation.</p>
+
+                    <a class="icon" href="https://www.linkedin.com/in/madison-stehle/"><img
+                            src="/resources/linkedin.png" alt="" class="linkedin"></a>
+
+                    <a class="icon" href="https://github.com/madisonstehle"><img src="/resources/github.png" alt=""
+                            class="github"></a>
+                </div>
+
+                <div id="Krystal">
+                    <img class="selfie" src="/resources/krystal.jpg" alt="selfie of Krystal">
+                    <h1 class="ourName">Krystal Madrinan</h1>
+                    <p class="blurb"> Krystal is a software developer based in Seattle, WA.
+                        Outside of coding, she enjoys dancing, yoga, and Doctor Who.
+                        Krystal hails from New York City.</p>
+                    <a class="icon" href="https://www.linkedin.com/in/krystal-madrinan/"><img
+                            src="/resources/linkedin.png" alt="" class="linkedin"></a>
+
+                    <a class="icon" href="https://github.com/KrystalMadrinan"><img src="/resources/github.png" alt=""
+                            class="github"></a>
+
+                </div>
+            </div>
+
+            <div id="thomasTenaw">
+                <div id="Thomas">
+                    <img class="selfie" src="/resources/thomas.jpg" alt="selfie of Thomas" />
+                    <h1 class="ourName">Thomas Tilahun</h1>
+                    <p class="blurb"> I am Software developer with a background in Graphics Design
+                        and who is passionate about drawing art.
+                        I focus on the solution, not on the problem!</p>
+
+                    <a class="icon" href="https://www.linkedin.com/in/thomas-tesfaye-853062b7/" target="_blank"><img
+                            src="/resources/linkedin.png" alt="" class="linkedin"></a>
+
+                    <a class="icon" href="https://github.com/Thomas720"><img src="/resources/github.png" alt=""
+                            class="github"></a>
+                </div>
+
+                <div id="Tenaw">
+                    <img class="selfie" src="resources/tenaw.jpg" alt="selfie of Tenaw" />
+                    <h1 class="ourName">Tenaw Deresh</h1>
+                    <p class="blurb"> My name is Tenaw and I am software Engineer.
+                        I have been in Seattle about five years.
+                        I love score, I enjoy spending time with family
+                        and also like trave and walking around green areas.
+                    </p>
+                    <a class="icon" href="https://www.linkedin.com/feed/"><img src="/resources/linkedin.png" alt=""
+                            class="linkedin"></a>
+
+                    <a class="icon" href="https://github.com/mete439"><img src="/resources/github.png" alt=""
+                            class="github"></a>
+
+                </div>
+            </div>
         </div>
-
-        <div id="Krystal">
-            <img src="" alt="">
-            <h1>Hi, I am Krystal</h1>
-            <p> I am great person and developer</p>
-
-        </div>
-
-        <div id="Thomas">
-            <img src="" alt="">
-            <h1>Hello, This is Thomas</h1>
-            <p> I am great person and developer</p>
-
-        </div>
-
-        <div id="Tenaw">
-            <img src="" alt="">
-            <h1>I am Tenaw </h1>
-            <p> I am a kind of lazy person </p>
-
-        </div>
-        <!-- about us here -->
     </main>
+
     <footer><%- include('partials/footer.ejs') %></footer>
 </body>
 

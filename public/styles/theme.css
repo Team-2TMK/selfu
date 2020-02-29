@@ -7,6 +7,50 @@ footer {
     color: #fafafa;
 }
 
+button {
+  background-color: #7bc0f2;
+  color: #36393b;
+  cursor: pointer;
+  text-align: center;
+  font-size: 14px;
+  margin: 25px 0 5px 0;
+  padding: 5px;
+}
+
+button:hover {
+  box-shadow: 0 1px rgba(0,0,0,0.24);
+  transform: translateY(1px);
+}
+
+
+/* About Us */
+
+#Madison, #Krystal, #Thomas, #Tenaw {
+  
+  border: 5px solid #7bc0f2;
+}
+
+.selfie {
+  border-radius: 40%;
+}
+
+
+
+/* Quiz Stuff */
+
+#instructions {
+  font-size: larger;
+}
+
+.questions, #date, #theNewDate {
+  outline: 2px solid #7bc0f2;
+}
+
+#quiz, #mydates, #newDate {
+  outline: 5px solid #7bc0f2;
+}
+
+
 /* Header stuff starts here */
 
 #menuToggle a

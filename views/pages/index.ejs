@@ -24,11 +24,14 @@
 
         <div id="welcomeMessage">
             <!-- show/hide -->
-            <p>Welcome to Selfu, </p>
+            <% if (typeof(userInfo)!=='undefined') { %>
+            <h1>Welcome to Selfu, <%= userInfo.username %>!</h1>
+            <% } %>
         </div>
 
-        <a href="/results"> <button>My Dates</button></a>
+
         <a href="/quiz"> <button>Take the Quiz</button></a>
+        <a href="/results"> <button>My Dates</button></a>
 
     </main>
 

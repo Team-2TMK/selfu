@@ -30,7 +30,13 @@ See our database layout [here](/resources/Database.jpg)
 - [PageFour](/resources/wirefram_page4.jpg)
 
 ## Resources
-<!-- APIs, fonts, color schemes, images, graphics, research, etc. -->
+https://developers.zomato.com/documentation
+https://api.eventful.com/docs
+http://paperquotes.com/api-docs/
+https://icons8.com/icons/set/linkedin
+https://icons8.com/icons/set/github
 
 ## Credits and Collaborations
-<!-- Give credit (and a link) to other people or resources that helped you build this application. -->
+Hamburger Menu:
+https://codepen.io/erikterwan/pen/EVzeRP
+Edited by Krystal Madrinan
