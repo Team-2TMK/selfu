@@ -1,13 +1,14 @@
 # selfu: The Self-Dating App
 
 **Authors**: Krystal, Thomas, Tenaw, Madison
-**Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
+
+**Version**: 1.0.0
 
 ## Overview
 People need to take care of and love themselves! This app that generates a date for yourself - take a quiz - get results for what you should do. It solves the problem of figuring out what to do and inspiration for taking yourself in or out on a date. It would also focus on self-love and generate songs/movies to absorb. 
 
 ## Getting Started
-Vist our deployed site at: [link here]()
+Vist our deployed site [here](https://selfu-codefellows.herokuapp.com/)
 
 ## User Stories
 1. As a user, I want to take a short quiz so that the app can determine what my self-date should be.
